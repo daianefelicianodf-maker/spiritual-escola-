@@ -12,7 +12,7 @@ Programa passo a passo para quem sente que está sendo afetado por energias nega
 - Apela diretamente à dor latente de 70%+ das pessoas religiosas/espiritualistas
 - O número "21 dias" cria comprometimento e acompanhamento diário (gatilho de hábito)
 - Conteúdo altamente compartilhável ("minha vida mudou depois do dia 7")
-- Funciona para múltiplos públicos: evangélicos, umbandistas, esotéricos, holísticos
+- Funciona para múltiplos públicos: espiritualistas, umbandistas, esotéricos, holísticos
 
 ### Estrutura do Curso
 | Módulo | Tema |
