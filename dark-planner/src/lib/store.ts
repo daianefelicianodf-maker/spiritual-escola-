@@ -8,10 +8,21 @@ interface DarkPlannerState {
   locale: Locale
   setLocale: (locale: Locale) => void
 
+  youtubeApiKey: string
+  setYoutubeApiKey: (key: string) => void
+
   channels: Channel[]
   activeChannelId: string | null
   setActiveChannel: (id: string | null) => void
-  importChannel: (input: { name: string; handle: string; niche: string; url?: string }) => Channel
+  importChannel: (input: {
+    name: string
+    handle: string
+    niche: string
+    url?: string
+    subscribers?: number
+    totalViews?: number
+    videosCount?: number
+  }) => Channel
   removeChannel: (id: string) => void
 
   videos: PlannedVideo[]
@@ -30,10 +41,13 @@ export const useDarkPlannerStore = create<DarkPlannerState>()(
       locale: 'pt-BR',
       setLocale: (locale) => set({ locale }),
 
+      youtubeApiKey: '',
+      setYoutubeApiKey: (key) => set({ youtubeApiKey: key.trim() }),
+
       channels: seedChannels,
       activeChannelId: null,
       setActiveChannel: (id) => set({ activeChannelId: id }),
-      importChannel: ({ name, handle, niche, url }) => {
+      importChannel: ({ name, handle, niche, url, subscribers, totalViews, videosCount }) => {
         const trimmedUrl = url?.trim()
         const channel: Channel = {
           id: uid('ch'),
@@ -41,9 +55,9 @@ export const useDarkPlannerStore = create<DarkPlannerState>()(
           handle: handle.startsWith('@') ? handle : `@${handle}`,
           url: trimmedUrl ? (/^https?:\/\//i.test(trimmedUrl) ? trimmedUrl : `https://${trimmedUrl}`) : undefined,
           avatarColor: AVATAR_COLORS[get().channels.length % AVATAR_COLORS.length],
-          subscribers: 0,
-          totalViews: 0,
-          videosCount: 0,
+          subscribers: subscribers ?? 0,
+          totalViews: totalViews ?? 0,
+          videosCount: videosCount ?? 0,
           niche,
           connectedAt: new Date().toISOString().slice(0, 10),
         }

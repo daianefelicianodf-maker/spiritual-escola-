@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Tv, CalendarClock, BarChart3, Moon } from 'lucide-react'
+import { LayoutDashboard, Tv, CalendarClock, BarChart3, Moon, Flame } from 'lucide-react'
 import { useTranslation } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { to: '/', labelKey: 'nav_dashboard', icon: LayoutDashboard },
   { to: '/channels', labelKey: 'nav_channels', icon: Tv },
+  { to: '/niche-finder', labelKey: 'nav_niche_finder', icon: Flame },
   { to: '/planner', labelKey: 'nav_planner', icon: CalendarClock },
   { to: '/analytics', labelKey: 'nav_analytics', icon: BarChart3 },
 ] as const

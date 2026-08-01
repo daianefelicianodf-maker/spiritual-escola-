@@ -31,3 +31,20 @@ export interface ChannelMetricPoint {
   views: number
   subscribers: number
 }
+
+export type TrendingWindow = '24h' | '48h' | '7d' | '30d'
+
+export interface TrendingVideo {
+  videoId: string
+  title: string
+  thumbnail: string
+  publishedAt: string
+  viewCount: number
+  channelId: string
+  channelTitle: string
+  channelHandle?: string
+  channelThumbnail?: string
+  channelSubscribers: number
+  viewsPerDay: number
+  viralScore: number
+}
