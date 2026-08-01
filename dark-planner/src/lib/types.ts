@@ -4,6 +4,7 @@ export interface Channel {
   id: string
   name: string
   handle: string
+  url?: string
   avatarColor: string
   subscribers: number
   totalViews: number

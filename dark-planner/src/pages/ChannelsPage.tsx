@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { useDarkPlannerStore } from '@/lib/store'
 import { useTranslation } from '@/lib/i18n'
+import { SEED_CHANNEL_IDS } from '@/lib/mock-data'
 import { Button } from '@/components/ui/Button'
 import { ChannelCard } from '@/components/channels/ChannelCard'
 import { ImportChannelDialog } from '@/components/channels/ImportChannelDialog'
@@ -10,6 +11,7 @@ export function ChannelsPage() {
   const { t } = useTranslation()
   const channels = useDarkPlannerStore((s) => s.channels)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const hasExampleChannels = channels.some((c) => SEED_CHANNEL_IDS.includes(c.id))
 
   return (
     <div>
@@ -23,6 +25,12 @@ export function ChannelsPage() {
           {t('import_channel')}
         </Button>
       </div>
+
+      {hasExampleChannels && (
+        <p className="mt-4 rounded-xl border border-border bg-surface-2 px-4 py-3 text-xs text-text-muted">
+          {t('example_channels_notice')}
+        </p>
+      )}
 
       {channels.length === 0 ? (
         <p className="mt-10 text-center text-sm text-text-muted">{t('no_channels')}</p>

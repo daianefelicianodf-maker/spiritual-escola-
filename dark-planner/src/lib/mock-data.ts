@@ -1,6 +1,8 @@
 import type { Channel, ChannelMetricPoint, PlannedVideo } from './types'
 import { uid } from './utils'
 
+export const SEED_CHANNEL_IDS = ['ch_1', 'ch_2', 'ch_3']
+
 export const seedChannels: Channel[] = [
   {
     id: 'ch_1',

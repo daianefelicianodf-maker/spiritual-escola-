@@ -1,8 +1,8 @@
-import { Trash2 } from 'lucide-react'
+import { ExternalLink, Trash2 } from 'lucide-react'
 import type { Channel } from '@/lib/types'
 import { useDarkPlannerStore } from '@/lib/store'
 import { useTranslation } from '@/lib/i18n'
-import { formatCompactNumber } from '@/lib/utils'
+import { channelUrl, formatCompactNumber } from '@/lib/utils'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 
@@ -22,7 +22,16 @@ export function ChannelCard({ channel }: { channel: Channel }) {
           </div>
           <div>
             <p className="text-sm font-semibold text-text">{channel.name}</p>
-            <p className="text-xs text-text-muted">{channel.handle}</p>
+            <a
+              href={channelUrl(channel)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={t('open_on_youtube')}
+              className="inline-flex items-center gap-1 text-xs text-text-muted hover:text-accent"
+            >
+              {channel.handle}
+              <ExternalLink size={11} />
+            </a>
           </div>
         </div>
         <button

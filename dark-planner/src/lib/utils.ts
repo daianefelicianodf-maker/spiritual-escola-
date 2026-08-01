@@ -1,7 +1,12 @@
 import { clsx, type ClassValue } from 'clsx'
+import type { Channel } from './types'
 
 export function cn(...inputs: ClassValue[]) {
   return clsx(inputs)
+}
+
+export function channelUrl(channel: Channel): string {
+  return channel.url?.trim() || `https://www.youtube.com/${channel.handle}`
 }
 
 export function formatCompactNumber(value: number, locale: string): string {

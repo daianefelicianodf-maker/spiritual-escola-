@@ -10,7 +10,7 @@ interface ImportChannelDialogProps {
   onOpenChange: (open: boolean) => void
 }
 
-const initialForm = { name: '', handle: '', niche: '' }
+const initialForm = { name: '', handle: '', niche: '', url: '' }
 
 export function ImportChannelDialog({ open, onOpenChange }: ImportChannelDialogProps) {
   const { t } = useTranslation()
@@ -57,6 +57,13 @@ export function ImportChannelDialog({ open, onOpenChange }: ImportChannelDialogP
             value={form.niche}
             onChange={(e) => setForm((f) => ({ ...f, niche: e.target.value }))}
             placeholder="Espiritualidade"
+          />
+        </Field>
+        <Field label={t('field_url')}>
+          <Input
+            value={form.url}
+            onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
+            placeholder="https://www.youtube.com/@mundomistico"
           />
         </Field>
         <div className="mt-5 flex justify-end gap-2">

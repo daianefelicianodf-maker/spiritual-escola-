@@ -11,7 +11,7 @@ interface DarkPlannerState {
   channels: Channel[]
   activeChannelId: string | null
   setActiveChannel: (id: string | null) => void
-  importChannel: (input: { name: string; handle: string; niche: string }) => Channel
+  importChannel: (input: { name: string; handle: string; niche: string; url?: string }) => Channel
   removeChannel: (id: string) => void
 
   videos: PlannedVideo[]
@@ -33,11 +33,13 @@ export const useDarkPlannerStore = create<DarkPlannerState>()(
       channels: seedChannels,
       activeChannelId: null,
       setActiveChannel: (id) => set({ activeChannelId: id }),
-      importChannel: ({ name, handle, niche }) => {
+      importChannel: ({ name, handle, niche, url }) => {
+        const trimmedUrl = url?.trim()
         const channel: Channel = {
           id: uid('ch'),
           name,
           handle: handle.startsWith('@') ? handle : `@${handle}`,
+          url: trimmedUrl ? (/^https?:\/\//i.test(trimmedUrl) ? trimmedUrl : `https://${trimmedUrl}`) : undefined,
           avatarColor: AVATAR_COLORS[get().channels.length % AVATAR_COLORS.length],
           subscribers: 0,
           totalViews: 0,
