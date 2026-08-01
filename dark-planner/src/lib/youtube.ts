@@ -126,3 +126,93 @@ export async function searchTrendingVideos({
 
   return results.sort((a, b) => b.viralScore - a.viralScore)
 }
+
+interface TrendingChartParams {
+  apiKey: string
+  regionCode: string
+  categoryId?: string
+  maxResults?: number
+}
+
+export async function fetchTrendingChart({
+  apiKey,
+  regionCode,
+  categoryId,
+  maxResults = 30,
+}: TrendingChartParams): Promise<TrendingVideo[]> {
+  if (!apiKey.trim()) throw new YoutubeApiError('missing_key', 'missing_key')
+
+  const videosJson = await callApi('videos', {
+    key: apiKey,
+    part: 'snippet,statistics',
+    chart: 'mostPopular',
+    regionCode,
+    maxResults: String(maxResults),
+    ...(categoryId ? { videoCategoryId: categoryId } : {}),
+  })
+
+  const videoItems: any[] = videosJson.items ?? []
+  if (videoItems.length === 0) return []
+
+  const channelIds = [...new Set(videoItems.map((v) => v.snippet.channelId as string))]
+  const channelsJson = await callApi('channels', {
+    key: apiKey,
+    part: 'snippet,statistics',
+    id: channelIds.join(','),
+  })
+  const channelById = new Map<string, any>((channelsJson.items ?? []).map((c: any) => [c.id, c]))
+
+  const results: TrendingVideo[] = videoItems.map((v) => {
+    const channel = channelById.get(v.snippet.channelId)
+    const subscribers = channel?.statistics?.hiddenSubscriberCount
+      ? 0
+      : Number(channel?.statistics?.subscriberCount ?? 0)
+    const viewCount = Number(v.statistics?.viewCount ?? 0)
+    const publishedAt = v.snippet.publishedAt as string
+    const ageDays = Math.max(1 / 24, (Date.now() - new Date(publishedAt).getTime()) / 86_400_000)
+    const viewsPerDay = viewCount / ageDays
+    const viralScore = viewsPerDay / Math.max(subscribers, 1000)
+
+    return {
+      videoId: v.id,
+      title: v.snippet.title,
+      thumbnail: v.snippet.thumbnails?.medium?.url ?? v.snippet.thumbnails?.default?.url ?? '',
+      publishedAt,
+      viewCount,
+      channelId: v.snippet.channelId,
+      channelTitle: v.snippet.channelTitle,
+      channelHandle: channel?.snippet?.customUrl ? `@${String(channel.snippet.customUrl).replace(/^@/, '')}` : undefined,
+      channelThumbnail: channel?.snippet?.thumbnails?.default?.url,
+      channelSubscribers: subscribers,
+      viewsPerDay,
+      viralScore,
+    }
+  })
+
+  return results
+}
+
+export interface VideoCategory {
+  id: string
+  title: string
+}
+
+export async function fetchVideoCategories({
+  apiKey,
+  regionCode,
+}: {
+  apiKey: string
+  regionCode: string
+}): Promise<VideoCategory[]> {
+  if (!apiKey.trim()) throw new YoutubeApiError('missing_key', 'missing_key')
+
+  const json = await callApi('videoCategories', {
+    key: apiKey,
+    part: 'snippet',
+    regionCode,
+  })
+
+  return (json.items ?? [])
+    .filter((c: any) => c.snippet?.assignable)
+    .map((c: any) => ({ id: c.id, title: c.snippet.title }))
+}
