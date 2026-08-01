@@ -7,6 +7,7 @@ import { StatCard } from '@/components/ui/StatCard'
 import { Card, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { StageBadge } from '@/components/planner/StageBadge'
+import { BackupHint } from '@/components/ui/BackupHint'
 
 export function DashboardPage() {
   const { t, locale } = useTranslation()
@@ -36,7 +37,11 @@ export function DashboardPage() {
       <h1 className="text-2xl font-semibold text-text">{t('dashboard_title')}</h1>
       <p className="mt-1 text-sm text-text-muted">{t('dashboard_subtitle')}</p>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6">
+        <BackupHint />
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label={t('stat_channels')} value={String(channels.length)} icon={Tv} />
         <StatCard label={t('stat_subscribers')} value={formatCompactNumber(totalSubscribers, locale)} icon={Users} />
         <StatCard label={t('stat_views')} value={formatCompactNumber(totalViews, locale)} icon={Eye} />

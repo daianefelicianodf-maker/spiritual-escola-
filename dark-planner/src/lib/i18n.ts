@@ -55,6 +55,12 @@ const dict = {
     file_attached: 'Arquivo anexado',
     settings_language: 'Idioma',
     empty_dashboard: 'Importe seu primeiro canal para começar.',
+    backup_export: 'Baixar backup',
+    backup_import: 'Restaurar backup',
+    backup_export_success: 'Backup baixado.',
+    backup_import_success: 'Dados restaurados com sucesso.',
+    backup_import_error: 'Não foi possível ler esse arquivo de backup.',
+    backup_hint: 'Seus dados ficam salvos apenas neste navegador. Baixe um backup para não perdê-los.',
   },
   en: {
     appName: 'Dark Planner',
@@ -109,6 +115,12 @@ const dict = {
     file_attached: 'File attached',
     settings_language: 'Language',
     empty_dashboard: 'Import your first channel to get started.',
+    backup_export: 'Download backup',
+    backup_import: 'Restore backup',
+    backup_export_success: 'Backup downloaded.',
+    backup_import_success: 'Data restored successfully.',
+    backup_import_error: 'Could not read that backup file.',
+    backup_hint: 'Your data is saved only in this browser. Download a backup so you don’t lose it.',
   },
   es: {
     appName: 'Dark Planner',
@@ -163,6 +175,12 @@ const dict = {
     file_attached: 'Archivo adjunto',
     settings_language: 'Idioma',
     empty_dashboard: 'Importa tu primer canal para empezar.',
+    backup_export: 'Descargar backup',
+    backup_import: 'Restaurar backup',
+    backup_export_success: 'Backup descargado.',
+    backup_import_success: 'Datos restaurados con éxito.',
+    backup_import_error: 'No se pudo leer ese archivo de backup.',
+    backup_hint: 'Tus datos se guardan solo en este navegador. Descarga un backup para no perderlos.',
   },
 } as const satisfies Record<Locale, Record<string, string>>
 
